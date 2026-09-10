@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider } from "./context/AuthContext";
 
 import Home from "./pages/Home";
 import Climate from "./pages/Climate";
@@ -16,110 +17,109 @@ import SuperAdminDashboard from "./pages/SuperAdminDashboard";
 import ManageAdmins from "./pages/ManageAdmins";
 import EditDataset from "./pages/EditDataset";
 
-
 function App() {
   return (
-    <BrowserRouter>
-      <Navbar />
+    <AuthProvider>
+      <BrowserRouter>
+        <Navbar />
 
-      <Routes>
+        <Routes>
 
-        {/* =========================
-            PUBLIC ROUTES
-        ========================== */}
+          {/* =========================
+              PUBLIC ROUTES
+          ========================== */}
 
-        <Route
-          path="/"
-          element={<Home />}
-        />
+          <Route
+            path="/"
+            element={<Home />}
+          />
 
-        <Route
-          path="/climate"
-          element={<Climate />}
-        />
+          <Route
+            path="/climate"
+            element={<Climate />}
+          />
 
-        <Route
-          path="/energy"
-          element={<Energy />}
-        />
+          <Route
+            path="/energy"
+            element={<Energy />}
+          />
 
-        <Route
-          path="/power"
-          element={<Power />}
-        />
+          <Route
+            path="/power"
+            element={<Power />}
+          />
 
-        <Route
-          path="/login"
-          element={<Login />}
-        />
+          <Route
+            path="/login"
+            element={<Login />}
+          />
 
+          {/* =========================
+              ADMIN ROUTES
+          ========================== */}
 
-        {/* =========================
-            ADMIN ROUTES
-        ========================== */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute
+                allowedRoles={["ADMIN", "SUPER_ADMIN"]}
+              >
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute
-              allowedRoles={["ADMIN", "SUPER_ADMIN"]}
-            >
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/admin/add-dataset"
+            element={
+              <ProtectedRoute
+                allowedRoles={["ADMIN", "SUPER_ADMIN"]}
+              >
+                <AddDataset />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/admin/add-dataset"
-          element={
-            <ProtectedRoute
-              allowedRoles={["ADMIN", "SUPER_ADMIN"]}
-            >
-              <AddDataset />
-            </ProtectedRoute>
-          }
-        />
+          {/* =========================
+              SUPER ADMIN ROUTES
+          ========================== */}
 
+          <Route
+            path="/super-admin"
+            element={
+              <ProtectedRoute
+                allowedRoles={["SUPER_ADMIN"]}
+              >
+                <SuperAdminDashboard />
+              </ProtectedRoute>
+            }
+          />
 
-        {/* =========================
-            SUPER ADMIN ROUTES
-        ========================== */}
+          <Route
+            path="/super-admin/admins"
+            element={
+              <ProtectedRoute
+                allowedRoles={["SUPER_ADMIN"]}
+              >
+                <ManageAdmins />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/super-admin"
-          element={
-            <ProtectedRoute
-              allowedRoles={["SUPER_ADMIN"]}
-            >
-              <SuperAdminDashboard />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/super-admin/datasets/:id/edit"
+            element={
+              <ProtectedRoute
+                allowedRoles={["SUPER_ADMIN"]}
+              >
+                <EditDataset />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/super-admin/admins"
-          element={
-            <ProtectedRoute
-              allowedRoles={["SUPER_ADMIN"]}
-            >
-              <ManageAdmins />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/super-admin/datasets/:id/edit"
-          element={
-            <ProtectedRoute
-              allowedRoles={["SUPER_ADMIN"]}
-            >
-              <EditDataset />
-            </ProtectedRoute>
-          }
-        />
-
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

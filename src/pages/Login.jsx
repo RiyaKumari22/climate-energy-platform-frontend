@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../services/api";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,8 +26,7 @@ function Login() {
 
       const { token, user } = response.data;
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+      login(user, token);
 
       if (user.role === "SUPER_ADMIN") {
         navigate("/super-admin");
@@ -47,7 +48,6 @@ function Login() {
   return (
     <div className="min-h-[calc(100vh-73px)] bg-slate-50 px-6 py-16">
       <div className="mx-auto max-w-md">
-        {/* Header */}
         <div className="mb-8 text-center">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-slate-900 text-xl font-bold text-white">
             V
@@ -62,10 +62,8 @@ function Login() {
           </p>
         </div>
 
-        {/* Login Card */}
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
           <form onSubmit={handleLogin} className="space-y-5">
-            {/* Email */}
             <div>
               <label
                 htmlFor="email"
@@ -85,7 +83,6 @@ function Login() {
               />
             </div>
 
-            {/* Password */}
             <div>
               <label
                 htmlFor="password"
@@ -105,7 +102,6 @@ function Login() {
               />
             </div>
 
-            {/* Error */}
             {error && (
               <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3">
                 <p className="text-sm font-medium text-red-700">
@@ -114,7 +110,6 @@ function Login() {
               </div>
             )}
 
-            {/* Button */}
             <button
               type="submit"
               disabled={loading}
@@ -125,7 +120,6 @@ function Login() {
           </form>
         </div>
 
-        {/* Public access note */}
         <div className="mt-6 text-center">
           <p className="text-xs leading-5 text-slate-500">
             Public datasets can be explored without an account.

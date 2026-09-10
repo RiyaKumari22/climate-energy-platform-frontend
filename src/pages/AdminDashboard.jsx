@@ -35,13 +35,6 @@ function AdminDashboard() {
     fetchDatasets();
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-
-    navigate("/login");
-  };
-
   const pendingCount = datasets.filter(
     (dataset) => dataset.status === "PENDING"
   ).length;
@@ -56,9 +49,11 @@ function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-slate-50">
+
       {/* Header */}
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+
           <div>
             <h1 className="text-2xl font-bold text-slate-900">
               Admin Dashboard
@@ -76,20 +71,16 @@ function AdminDashboard() {
             >
               + Add Dataset
             </button>
-
-            <button
-              onClick={handleLogout}
-              className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
-            >
-              Logout
-            </button>
           </div>
+
         </div>
       </header>
 
       <main className="mx-auto max-w-7xl px-6 py-8">
+
         {/* Statistics */}
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+
           <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
             <p className="text-sm font-medium text-slate-500">
               Total Datasets
@@ -129,11 +120,14 @@ function AdminDashboard() {
               {rejectedCount}
             </p>
           </div>
+
         </div>
 
         {/* Dataset Table */}
         <div className="mt-8 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+
           <div className="border-b border-slate-200 px-6 py-5">
+
             <h2 className="text-lg font-semibold text-slate-900">
               My Datasets
             </h2>
@@ -141,6 +135,7 @@ function AdminDashboard() {
             <p className="mt-1 text-sm text-slate-500">
               View the datasets you have submitted.
             </p>
+
           </div>
 
           {loading && (
@@ -157,6 +152,7 @@ function AdminDashboard() {
 
           {!loading && !error && datasets.length === 0 && (
             <div className="px-6 py-10 text-center">
+
               <p className="text-sm text-slate-500">
                 No datasets found.
               </p>
@@ -167,14 +163,18 @@ function AdminDashboard() {
               >
                 Add Your First Dataset
               </button>
+
             </div>
           )}
 
           {!loading && !error && datasets.length > 0 && (
             <div className="overflow-x-auto">
+
               <table className="min-w-full text-left text-sm">
+
                 <thead className="bg-slate-50 text-xs uppercase text-slate-500">
                   <tr>
+
                     <th className="px-6 py-4 font-semibold">
                       Title
                     </th>
@@ -198,16 +198,20 @@ function AdminDashboard() {
                     <th className="px-6 py-4 font-semibold">
                       Created
                     </th>
+
                   </tr>
                 </thead>
 
                 <tbody className="divide-y divide-slate-100">
+
                   {datasets.map((dataset) => (
                     <tr
                       key={dataset.id}
                       className="transition hover:bg-slate-50"
                     >
+
                       <td className="px-6 py-4">
+
                         <p className="font-medium text-slate-900">
                           {dataset.title}
                         </p>
@@ -217,6 +221,7 @@ function AdminDashboard() {
                             {dataset.description}
                           </p>
                         )}
+
                       </td>
 
                       <td className="px-6 py-4 font-medium text-slate-700">
@@ -232,6 +237,7 @@ function AdminDashboard() {
                       </td>
 
                       <td className="px-6 py-4">
+
                         {dataset.status === "PENDING" && (
                           <span className="inline-flex rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700">
                             Pending
@@ -249,6 +255,7 @@ function AdminDashboard() {
                             Rejected
                           </span>
                         )}
+
                       </td>
 
                       <td className="px-6 py-4 text-slate-600">
@@ -256,13 +263,19 @@ function AdminDashboard() {
                           dataset.createdAt
                         ).toLocaleDateString()}
                       </td>
+
                     </tr>
                   ))}
+
                 </tbody>
+
               </table>
+
             </div>
           )}
+
         </div>
+
       </main>
     </div>
   );
