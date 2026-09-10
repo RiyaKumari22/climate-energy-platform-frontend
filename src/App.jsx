@@ -9,7 +9,7 @@ import Climate from "./pages/Climate";
 import Energy from "./pages/Energy";
 import Power from "./pages/Power";
 import Login from "./pages/Login";
-
+import Footer from "./components/Footer";
 import AdminDashboard from "./pages/AdminDashboard";
 import AddDataset from "./pages/AddDataset";
 
@@ -118,6 +118,7 @@ function App() {
           />
 
         </Routes>
+          <Footer />
       </BrowserRouter>
     </AuthProvider>
   );
