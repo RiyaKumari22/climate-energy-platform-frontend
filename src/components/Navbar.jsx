@@ -1,3 +1,4 @@
+
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -10,117 +11,74 @@ function Navbar() {
     navigate("/login");
   };
 
+  const navClass = ({ isActive }) =>
+    `px-3 py-2 text-sm font-medium transition-colors ${
+      isActive
+        ? "text-[#176B3A] font-semibold"
+        : "text-[#3F4A44] hover:text-[#176B3A]"
+    }`;
+
   return (
-    <nav className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
+    <nav className="sticky top-0 z-50 border-b border-[#E5EAE6] bg-white">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
 
-        {/* Logo */}
-        <Link
-          to="/"
-          className="flex items-center gap-3"
-        >
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-900 text-sm font-bold text-white">
+        {/* Logo / Brand */}
+        <Link to="/" className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center bg-[#176B3A] text-lg font-bold text-white">
             V
           </div>
 
           <div>
-            <p className="text-base font-bold text-slate-900">
+            <p className="text-lg font-bold tracking-tight text-[#173B2A]">
               Vasudha
             </p>
 
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-[#66736C]">
               Climate • Energy • Power
             </p>
           </div>
         </Link>
 
         {/* Navigation */}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
 
-          {/* Home */}
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `rounded-lg px-3 py-2 text-sm font-medium ${
-                isActive
-                  ? "bg-slate-900 text-white"
-                  : "text-slate-600 hover:bg-slate-100"
-              }`
-            }
-          >
+          <NavLink to="/" className={navClass}>
             Home
           </NavLink>
 
-          {/* Climate */}
-          <NavLink
-            to="/climate"
-            className={({ isActive }) =>
-              `rounded-lg px-3 py-2 text-sm font-medium ${
-                isActive
-                  ? "bg-slate-900 text-white"
-                  : "text-slate-600 hover:bg-slate-100"
-              }`
-            }
-          >
+          <NavLink to="/climate" className={navClass}>
             Climate
           </NavLink>
 
-          {/* Energy */}
-          <NavLink
-            to="/energy"
-            className={({ isActive }) =>
-              `rounded-lg px-3 py-2 text-sm font-medium ${
-                isActive
-                  ? "bg-slate-900 text-white"
-                  : "text-slate-600 hover:bg-slate-100"
-              }`
-            }
-          >
+          <NavLink to="/energy" className={navClass}>
             Energy
           </NavLink>
 
-          {/* Power */}
-          <NavLink
-            to="/power"
-            className={({ isActive }) =>
-              `rounded-lg px-3 py-2 text-sm font-medium ${
-                isActive
-                  ? "bg-slate-900 text-white"
-                  : "text-slate-600 hover:bg-slate-100"
-              }`
-            }
-          >
+          <NavLink to="/power" className={navClass}>
             Power
           </NavLink>
 
-          {/* =========================
-              LOGGED-IN USER
-          ========================== */}
-
           {user ? (
-            <div className="ml-4 flex items-center gap-3">
+            <div className="ml-5 flex items-center gap-3">
 
               {/* Profile */}
-              <div className="flex items-center gap-2 rounded-lg bg-slate-100 px-3 py-2">
+              <div className="flex items-center gap-2 border-l border-[#E5EAE6] pl-5">
 
-                {/* Profile Initial */}
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 text-sm font-bold text-white">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E8F1EB] text-sm font-semibold text-[#176B3A]">
                   {user.name?.charAt(0).toUpperCase()}
                 </div>
 
-                {/* Name and Role */}
                 <div>
-                  <p className="text-sm font-semibold text-slate-900">
+                  <p className="text-sm font-semibold text-[#173B2A]">
                     {user.name}
                   </p>
 
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-[#66736C]">
                     {user.role === "SUPER_ADMIN"
                       ? "Super Admin"
                       : "Admin"}
                   </p>
                 </div>
-
               </div>
 
               {/* Dashboard */}
@@ -130,7 +88,7 @@ function Navbar() {
                     ? "/super-admin"
                     : "/admin"
                 }
-                className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+                className="bg-[#176B3A] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#12562E]"
               >
                 Dashboard
               </Link>
@@ -138,20 +96,16 @@ function Navbar() {
               {/* Logout */}
               <button
                 onClick={handleLogout}
-                className="rounded-lg border border-red-200 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50"
+                className="border border-[#D5DDD8] px-4 py-2 text-sm font-medium text-[#3F4A44] transition-colors hover:border-[#176B3A] hover:text-[#176B3A]"
               >
                 Logout
               </button>
 
             </div>
           ) : (
-            /* =========================
-               NOT LOGGED-IN USER
-            ========================== */
-
             <Link
               to="/login"
-              className="ml-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+              className="ml-3 border border-[#176B3A] px-4 py-2 text-sm font-medium text-[#176B3A] transition-colors hover:bg-[#176B3A] hover:text-white"
             >
               Admin Login
             </Link>
