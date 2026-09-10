@@ -30,7 +30,7 @@ function Navbar() {
 
           <div>
             <p className="text-lg font-bold tracking-tight text-[#173B2A]">
-              Vasudha
+              Vasudha Foundation
             </p>
 
             <p className="text-xs text-[#66736C]">
